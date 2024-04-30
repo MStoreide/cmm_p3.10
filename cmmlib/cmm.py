@@ -72,7 +72,7 @@ def manifold_harmonics(verts, tris, K, scaled=True, return_D=False, return_eigen
 
     try:
         lambda_dense, Phi_dense = eigsh(-Q, M=D, k=K, sigma=0)
-    except RuntimeError, e:
+    except RuntimeError as e:
         if e.message == 'Factor is exactly singular':
             logging.warn("factor is singular, trying some regularization and cholmod")
             chol_solve = factorized(-Q + sparse.eye(Q.shape[0]) * 1.e-9)
@@ -194,7 +194,7 @@ def solve_compressed_splitorth(L, K, mu1=10., Phi_init=None, maxiter=None, callb
             # TODO check if convergence check is correct for 3-function ADMM
             if rnorm < eps_pri and snorm < eps_dual or converged:
                 if verbose:
-                    print "converged!"
+                    print("converged!")
                 converged = True
             if verbose and (i % verbose == 0 or converged or (maxiter is not None and i == maxiter - 1)):
                 sparsity = np.sum(mu * np.abs(Phi))
@@ -202,9 +202,9 @@ def solve_compressed_splitorth(L, K, mu1=10., Phi_init=None, maxiter=None, callb
                 gap1 = np.linalg.norm(Q - Phi)
                 gap2 = np.linalg.norm(P - Phi)
                 #ortho = np.linalg.norm(Phi.T.dot((D.T * D) * Phi) - np.eye(Phi.shape[1]))
-                print i, 
-                print "o %0.8f" % (sparsity + eig), # %0.4f %0.4f" % (sparsity + eig, sparsity, eig), 
-                print " | r [%.8f %.8f %.8f] s [%.8f]" % (gap1, gap2, rnorm, snorm)
+                print(i), 
+                print("o %0.8f" % (sparsity + eig)), # %0.4f %0.4f" % (sparsity + eig, sparsity, eig), 
+                print(" | r [%.8f %.8f %.8f] s [%.8f]" % (gap1, gap2, rnorm, snorm))
             if converged:
                 break
 
@@ -291,7 +291,7 @@ def solve_compressed_osher(L, K, mu1=10., Phi_init=None, maxiter=None, callback=
         eps_dual = np.sqrt(Phi.shape[1]) * tol_abs + tol_rel * max(np.linalg.norm(r * B), np.linalg.norm(lambda_ * b))
         if rnorm < eps_pri and snorm < eps_dual or converged:
             if verbose:
-                print "converged!"
+                print("converged!")
             converged = True
         if verbose and (i % verbose == 0 or converged or (maxiter is not None and i == maxiter - 1)):
             sparsity = np.sum(mu * np.abs(Phi))
@@ -299,9 +299,9 @@ def solve_compressed_osher(L, K, mu1=10., Phi_init=None, maxiter=None, callback=
             gap1 = np.linalg.norm(Q - Phi)
             gap2 = np.linalg.norm(P - Phi)
             #ortho = np.linalg.norm(Phi.T.dot((D.T * D) * Phi) - np.eye(Phi.shape[1]))
-            print i, 
-            print "o %0.8f" % (sparsity + eig), # %0.4f %0.4f" % (sparsity + eig, sparsity, eig), 
-            print " | r [%.8f %.8f %.8f] s [%.8f]" % (gap1, gap2, rnorm, snorm)
+            print(i), 
+            print("o %0.8f" % (sparsity + eig)), # %0.4f %0.4f" % (sparsity + eig, sparsity, eig), 
+            print(" | r [%.8f %.8f %.8f] s [%.8f]" % (gap1, gap2, rnorm, snorm))
         if converged:
             break
     info['num_iters'] = i

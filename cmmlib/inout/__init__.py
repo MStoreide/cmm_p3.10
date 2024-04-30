@@ -39,7 +39,7 @@ def load_mesh(filename, check=True, normalize=True, *args, **kwargs):
         assert np.all(faces[:,0] == 3) # ensure triangles
         result = pd.points.to_array(), faces[:,1:]
     else:
-        raise ValueError, "cannot load meshes with extension %s" % ext
+        raise ValueError("cannot load meshes with extension %s" % ext)
     if normalize:
         verts = result[0]
         verts[:] = verts - verts.mean(axis=0)
@@ -67,7 +67,7 @@ def check_mesh(verts, tris, filename=None):
     if n_components > 1:
         size_components = np.bincount(labels)
         if len(size_components) > 1:
-            raise ValueError, "found %d connected components in the mesh (%s)" % (n_components, filename)
+            raise ValueError("found %d connected components in the mesh (%s)" % (n_components, filename))
         keep_vert = labels == size_components.argmax()
     else:
         keep_vert = np.ones(verts.shape[0], np.bool)
@@ -108,7 +108,7 @@ def load_shape_pair(filename1, filename2, **kwargs):
     verts1, tris1 = load_mesh(filename1, **kwargs)
     verts2, tris2 = load_mesh(filename2, **kwargs)
     if np.all(tris1 == tris2):
-        print "same topo"
+        print("same topo")
         ij = np.column_stack((np.arange(len(verts1)), np.arange(len(verts2))))
     else:
         map_file = path.join(basedir1, "%s_%s.ij" % (basename1, basename2))

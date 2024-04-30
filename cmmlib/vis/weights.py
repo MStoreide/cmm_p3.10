@@ -47,7 +47,7 @@ class WeightsVisualization(HasTraits):
                 else:
                     names.append(mesh[3])
         else:
-            raise ValueError, 'illegal value for parameter "meshes"'
+            raise ValueError('illegal value for parameter "meshes"')
 
         ## single arrays given?
         #share_verts, share_tris = False, False

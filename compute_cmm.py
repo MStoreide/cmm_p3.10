@@ -22,15 +22,15 @@ def main(input_filename, K, mu, output_dir=None, visualize=False, scaled=False,
          maxiter=None, ply=False, off=False):
 
     if (off or ply) and not output_dir:
-        print "please specify an output directory"
+        print("please specify an output directory")
         return 1
 
     if output_dir and not path.exists(output_dir):
-        print "%s does not exist" % output_dir
+        print("%s does not exist" % output_dir)
         return 2
 
     verts, tris = load_mesh(input_filename, normalize=True)
-    print "%d vertices, %d faces" % (len(verts), len(tris))
+    print("%d vertices, %d faces" % (len(verts), len(tris)))
 
     Phi_cpr, D = cmm.compressed_manifold_modes(
         verts, tris, K, mu=mu, scaled=scaled,
@@ -59,7 +59,7 @@ def main(input_filename, K, mu, output_dir=None, visualize=False, scaled=False,
         try:
             import h5py
         except ImportError:
-            print "Cannot save as HDF5, please install the h5py module"
+            print("Cannot save as HDF5, please install the h5py module")
         else:
             with h5py.File(path.join(output_dir, 'phi.h5'), 'w') as f:
                 f['verts'] = verts

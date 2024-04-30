@@ -20,7 +20,7 @@ def orthomax(Phi, gamma=1., maxiter=20, tol=1e-6):
         http://graphics.stanford.edu/projects/lgl/papers/sbbg-diptm-11/sbbg-diptm-11.pdf
     """
     if gamma < 0 or gamma > 1:
-        raise ValueError, "gamma must be between 0 and 1"
+        raise ValueError("gamma must be between 0 and 1")
     p, k = Phi.shape
     R = np.eye(k)
     Lambda = Phi
@@ -35,7 +35,7 @@ def orthomax(Phi, gamma=1., maxiter=20, tol=1e-6):
         Lambda = np.dot(Phi, R)
         d = np.sum(s)
         if d_old != None and d < d_old * (1 + tol):
-            print "orthomax converged"
+            print("orthomax converged")
             break
         d_old = d
     return np.dot(Phi, R)

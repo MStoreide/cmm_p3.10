@@ -2,8 +2,8 @@ import numpy as np
 from scipy import sparse
 
 from util import veclen, normalized
-from laplacian import compute_mesh_laplacian
-from prefactor import factorized
+from .laplacian import compute_mesh_laplacian
+from .prefactor import factorized
 
 
 class GeodesicDistanceComputation(object):

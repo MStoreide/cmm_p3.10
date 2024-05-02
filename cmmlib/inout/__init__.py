@@ -5,8 +5,8 @@ from scipy.io import loadmat
 from scipy.sparse import csgraph
 from scipy import sparse
 
-from wavefront_obj import loadobj
-import off
+from .wavefront_obj import loadobj
+from .off import save_mesh, read_mesh
 from ..util import filter_reindex
 
 
@@ -25,7 +25,7 @@ def load_mesh(filename, check=True, normalize=True, *args, **kwargs):
     elif ext == '.off':
         if not 'no_colors' in kwargs:
             kwargs['no_colors'] = True
-        result = off.read_mesh(filename, *args, **kwargs)
+        result = read_mesh(filename, *args, **kwargs) #result = off.read_mesh(filename, *args, **kwargs)
         if len(result) == 3:
             result = [result[0], result[2], result[1]]
     elif ext == '.mat':

@@ -1,7 +1,7 @@
 import numpy as np
 from scipy import sparse
 
-from util import veclen
+from .util import veclen
 
 
 def compute_mesh_laplacian(verts, tris, weight_type='cotangent',

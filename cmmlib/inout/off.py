@@ -1,5 +1,5 @@
 import numpy as np
-from StringIO import StringIO
+from io import StringIO
 
 def save_mesh(filename, vertices=None, faces=None):
     if vertices is None:

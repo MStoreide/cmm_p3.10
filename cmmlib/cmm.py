@@ -4,9 +4,9 @@ import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import eigsh
 
-from laplacian import compute_mesh_laplacian
-from orthomax import orthomax
-from prefactor import factorized
+from .laplacian import compute_mesh_laplacian
+from .orthomax import orthomax
+from .prefactor import factorized
 
 
 

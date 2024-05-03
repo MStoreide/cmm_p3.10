@@ -22,9 +22,9 @@ def compressed_manifold_modes(verts, tris, K, mu, init=None, scaled=False,
     else:
         D = Dinv = None
 
-    if init == 'mh':
+    if (init == 'mh').all():
         Phi_init = manifold_harmonics(verts, tris, K)
-    elif init == 'varimax':
+    elif (init == 'varimax').all():
         Phi_init = varimax_modes(verts, tris, K)
     elif type(init) == np.ndarray:
         Phi_init = init
@@ -130,7 +130,7 @@ def solve_compressed_splitorth(L, K, mu1=10., Phi_init=None, maxiter=None, callb
     refactorize = False
 
     # iteration state
-    iters = count() if maxiter is None else xrange(maxiter)
+    iters = count() if maxiter is None else range(maxiter)
     converged = False
 
     info = {}
@@ -239,7 +239,7 @@ def solve_compressed_osher(L, K, mu1=10., Phi_init=None, maxiter=None, callback=
     refactorize = False
 
     # iteration state
-    iters = count() if maxiter is None else xrange(maxiter)
+    iters = count() if maxiter is None else range(maxiter)
     converged = False
 
     info = {}

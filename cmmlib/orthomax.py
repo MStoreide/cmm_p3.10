@@ -25,7 +25,7 @@ def orthomax(Phi, gamma=1., maxiter=20, tol=1e-6):
     R = np.eye(k)
     Lambda = Phi
     d_old = None
-    for i in xrange(maxiter):
+    for i in range(maxiter):
         if gamma > 0:
             Z = Lambda**3 - (gamma / p) * np.dot(Lambda, np.diag(np.diag(np.dot(Lambda.T, Lambda))))
         else:
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     y, x = np.mgrid[:n, :n]
     xy = np.dstack((x, y)).astype(np.float)
     components = []
-    for i in xrange(n_components):
+    for i in range(n_components):
         mean = np.random.uniform(0, n, 2)
         sigma = np.random.uniform(0, n/3, 2)
         p = np.exp( - ((xy - mean)**2 / (2*sigma)).sum(axis=-1))

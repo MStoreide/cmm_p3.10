@@ -70,7 +70,7 @@ def check_mesh(verts, tris, filename=None):
             raise ValueError("found %d connected components in the mesh (%s)" % (n_components, filename))
         keep_vert = labels == size_components.argmax()
     else:
-        keep_vert = np.ones(verts.shape[0], np.bool)
+        keep_vert = np.ones(verts.shape[0], bool)
     verts = verts[keep_vert, :]
     tris = filter_reindex(keep_vert, tris[keep_vert[tris].all(axis=1)])
     return verts, tris

@@ -135,7 +135,7 @@ def compute_mesh_laplacian(verts, tris, weight_type='cotangent',
 
         elif area_type == 'lumped_mass':
             lump_area = veclen(np.cross(PQ, RP)) / 6.
-            area = sum(np.bincount(tris[:,i], lump_area, minlength=n) for i in xrange(3))
+            area = sum(np.bincount(tris[:,i], lump_area, minlength=n) for i in range(3))
 
         return L, area
     else:

@@ -53,26 +53,27 @@ def main():
 
     # run the algorithm with same input mesh and
     # different random initializations
-    print "will now run the method with %d different initializations" % num_experiments
-    print "the primal residual with our method should consistently be lower compared to Oshers et al."
+    print("will now run the method with %d different initializations" % num_experiments)
+    print("the primal residual with our method should consistently be lower compared to Oshers et al.")
     for random_seed in range(num_experiments):
         np.random.seed(random_seed)
         Phi_init = np.random.random((len(verts), K))
-        print "--"
-        print "running experiment %d" % random_seed
+        print("--")
+        print("running experiment %d" % random_seed)
         for name, method, options in algorithms:
             Phi, info, logger = test_convergence(
                 verts, tris, K, mu,
                 Phi_init, method, maxiter, **options)
-            print name, info['r_primal']
+            print(name, info['r_primal'])
             data_per_algo[name].append(ResultData(Phi, info, logger))
 
     # visualize results
     import matplotlib
+
     if len(sys.argv) > 1:
-        matplotlib.use('pgf') # TODO PGF
+        matplotlib.use('WxAgg') # TODO PGF #pgf
     else:
-        matplotlib.use('WxAgg')
+        matplotlib.use('TkAgg') 
 
     import pylab as pl
     pl.rc('text', usetex=True)

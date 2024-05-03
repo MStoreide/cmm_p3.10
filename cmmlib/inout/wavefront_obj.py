@@ -5,20 +5,43 @@ _triangle_regex = re.compile("^f\s+([^\/\s]+)/?\S*/?\S*\s+([^\/\s]+)/?\S*/?\S*\s
 _normal_regex = re.compile("^vn\s+(\S+)\s+(\S+)\s+(\S+)", re.MULTILINE)
 _vertex_regex = re.compile("^v\s+(\S+)\s+(\S+)\s+(\S+)", re.MULTILINE)
 
+# Old loadobj
+#def loadobj(filename, load_normals=False):
+#    """ load a wavefront obj file
+#        loads vertices into a (x,y,z) struct array and vertex indices
+#        into a n x 3 index array 
+#        only loads obj files vertex positions and also
+#        only works with triangle meshes """
+#    vertices = np.fromregex(open(filename), _vertex_regex, np.float64)
+#    if load_normals:
+#        normals = np.fromregex(open(filename), _normal_regex, np.float64) #Changed to np.float64
+#    triangles = np.fromregex(open(filename), _triangle_regex, np.int) - 1 # 1-based indexing in obj file format!
+#   if load_normals:
+#       return vertices, normals, triangles
+#   else:
+#       return vertices, triangles
+
+# New loadobj
+
+
 def loadobj(filename, load_normals=False):
     """ load a wavefront obj file
         loads vertices into a (x,y,z) struct array and vertex indices
         into a n x 3 index array 
         only loads obj files vertex positions and also
         only works with triangle meshes """
-    vertices = np.fromregex(open(filename), _vertex_regex, np.float)
+    with open(filename) as f:
+        content = f.read()
+    vertices = np.array(re.findall(_vertex_regex, content), dtype=np.float64)
     if load_normals:
-        normals = np.fromregex(open(filename), _normal_regex, np.float)
-    triangles = np.fromregex(open(filename), _triangle_regex, np.int) - 1 # 1-based indexing in obj file format!
+        normals = np.array(re.findall(_normal_regex, content), dtype=np.float64)
+    triangles = np.array(re.findall(_triangle_regex, content), dtype=np.int64) - 1 # 1-based indexing in obj file format!
     if load_normals:
         return vertices, normals, triangles
     else:
         return vertices, triangles
+
+
 
 def saveobj(filename, vertices, triangles, normals=None):
     with open(filename, 'w') as f:

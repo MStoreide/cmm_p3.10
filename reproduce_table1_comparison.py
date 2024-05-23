@@ -25,7 +25,7 @@ def main():
 
     for mesh_name, mu, filename, Ks, scaled in meshes:
         verts, tris = load_mesh(filename, check=False, normalize=True)
-        print mesh_name, len(verts), len(tris)
+        print(mesh_name, len(verts), len(tris))
         for K in Ks:
             t_cmh = time()
             Phi_cmh, D_cmh = cmm.compressed_manifold_modes(
@@ -67,12 +67,12 @@ def main():
                 time=t_cmh,
             ))
 
-    print "------------"
-    print "TABLE START:"
-    print "------------"
-    print "mesh & basis & $K$ & $\\mu$ & error & size & time"
+    print("------------")
+    print("TABLE START:")
+    print("------------")
+    print("mesh & basis & $K$ & $\\mu$ & error & size & time")
     for line in result_lines:
-        print line
+        print(line)
 
 if __name__ == '__main__':
     main()

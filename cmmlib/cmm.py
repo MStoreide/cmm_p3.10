@@ -22,10 +22,11 @@ def compressed_manifold_modes(verts, tris, K, mu, init=None, scaled=False,
     else:
         D = Dinv = None
 
-    if (init == 'mh').all():
+    if init == 'mh':
         Phi_init = manifold_harmonics(verts, tris, K)
-    elif (init == 'varimax').all():
+    elif init == 'varimax':
         Phi_init = varimax_modes(verts, tris, K)
+
     elif type(init) == np.ndarray:
         Phi_init = init
     else:

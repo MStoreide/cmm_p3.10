@@ -7,7 +7,6 @@ from scipy.io import savemat
 from cmmlib.inout import load_mesh, save_coff
 from cmmlib import cmm
 
-
 @plac.annotations(
     K=('number of CMHBs', 'positional', None, int),
     mu=('sparsity parameter mu', 'positional', None, float),
@@ -78,14 +77,14 @@ def main(input_filename, K, mu, output_dir=None, visualize=False, scaled=False,
             lut = LUTManager(lut_mode='RdBu').lut.table.to_array()[:, :3]
             colors = [
                 lut[(_centered(Phi_cpr[:, k]) * (lut.shape[0]-1)).astype(int)]
-                for k in xrange(K)]
+                for k in range(K)]
             # save in a single scene as a collage
             w = int(np.ceil(np.sqrt(K))) if K > 6 else K
             spacing = 1.2 * verts.ptp(axis=0)
             all_verts = [verts + spacing * (1.5, 0, 0)]
             all_tris = [tris]
-            all_color = [np.zeros(verts.shape, np.int) + 127]
-            for k in xrange(K):
+            all_color = [np.zeros(verts.shape, int) + 127]
+            for k in range(K):
                 all_verts.append(verts + spacing * (-(k % w), 0, int(k / w)))
                 all_tris.append(tris + len(verts) * (k+1))
                 all_color.append(colors[k])
@@ -93,7 +92,7 @@ def main(input_filename, K, mu, output_dir=None, visualize=False, scaled=False,
             if off:
                 save_coff(path.join(output_dir, 'input.off'),
                           verts.astype(np.float32), tris)
-                for k in xrange(K):
+                for k in range(K):
                     save_coff(path.join(output_dir, 'cmh_%03d.off' % k),
                               verts.astype(np.float32), tris, colors[k])
                 save_coff(path.join(output_dir, 'all.off'),
@@ -109,10 +108,10 @@ def main(input_filename, K, mu, output_dir=None, visualize=False, scaled=False,
                 pd.point_data.scalars.name = 'colors'
                 ply = tvtk.PLYWriter(
                     file_name=path.join(output_dir, 'all.ply'),
-                    input=pd, color=(1, 1, 1))
+                    color=(1, 1, 1))
                 ply.array_name = 'colors'
+                ply.set_input_data(pd)  # Use set_input_data instead of setting the input attribute directly
                 ply.write()
-
 
 if __name__ == '__main__':
     plac.call(main)

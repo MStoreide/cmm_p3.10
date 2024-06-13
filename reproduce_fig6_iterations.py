@@ -14,7 +14,7 @@ _, _, color1 = load_mesh('meshes/bunny_fixed_ear.off', no_colors=False)
 _, _, color2 = load_mesh('meshes/bunny_fixed_sgp.off', no_colors=False)
 
 all_Phis = []
-for init in xrange(num_inits):
+for init in range(num_inits):
     if init == 0:
         Phi_init = -1 * (color1[:, 0] > 200).astype(np.float).reshape(len(verts), K)
     elif init == 1:

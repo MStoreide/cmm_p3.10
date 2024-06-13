@@ -29,13 +29,13 @@ def compute_geodesic_distances(verts, tris, sources):
 
 @mem.cache
 def compute_geodesic_distance_matrix(verts, tris):
-    print "precomputing geodesic distance..."
+    print("precomputing geodesic distance...")
     n_chunks = cpu_count()
     chunk_size = int(np.ceil(len(verts) / float(n_chunks)))
     sources = np.arange(len(verts))
     D = Parallel(n_chunks)(
         delayed(compute_geodesic_distances)(verts, tris, sources[i: i + chunk_size])
-        for i in xrange(0, len(verts), chunk_size))
+        for i in range(0, len(verts), chunk_size))
     return np.vstack(D)
 
 
@@ -73,15 +73,15 @@ def main(experiment):
         ),
     )
     if experiment not in experiments:
-        print "Usage: python %s <experiment>" % sys.argv[0]
-        print "where experiment is one of: %s" % (', '.join(experiments.keys()))
+        print("Usage: python %s <experiment>" % sys.argv[0])
+        print("where experiment is one of: %s" % (', '.join(experiments.keys())))
         sys.exit(1)
 
     exp = experiments[experiment]
     file1, file2 = exp['file1'], exp['file2']
     mu, Ks = exp['mu'], exp['Ks']
 
-    print "this will take a while..."
+    print("this will take a while...")
 
     # load meshes
     verts1, tris1, verts2, tris2, ij = load_shape_pair(file1, file2, check=False, normalize=False)
@@ -108,12 +108,12 @@ def main(experiment):
         #('permutation', partial(align.optimal_permutation, allow_reflection=True)),
     ]
 
-    print "computing basis functions (first mesh)"
+    print("computing basis functions (first mesh)")
     runs = [(K, name, algo) for K in Ks for name, algo in eigenvector_algorithms]
     Phis1 = Parallel(-1)(
         delayed(algo)(verts1, tris1, K)
         for K, name, algo in runs)
-    print "computing basis functions (second mesh)"
+    print("computing basis functions (second mesh)")
     Phis2 = Parallel(-1)(
         delayed(algo)(verts2, tris2, K)
         for K, name, algo in runs)
@@ -141,7 +141,7 @@ def main(experiment):
             mean_error = np.mean(errors)
             errors_per_mapping_algorithm[mapping_algorithm_name][eigenvector_algorithm_name].append(mean_error)
             C_by_mapping_algorithm[mapping_algorithm_name][eigenvector_algorithm_name].append(C)
-            print "%s/%s (K=%d) %.2f" % (mapping_algorithm_name, eigenvector_algorithm_name, K, mean_error)
+            print("%s/%s (K=%d) %.2f" % (mapping_algorithm_name, eigenvector_algorithm_name, K, mean_error))
 
     for mapping_algorithm_name, C_by_trial in C_by_mapping_algorithm.iteritems():
         for trial_name, Cs in C_by_trial.iteritems():
@@ -166,7 +166,7 @@ def main(experiment):
             MHB=dict(c=(121/255., 6/255., 34/255.), lw=1)
         )
         for trial_name, errors in sorted(errors_per_trial.items(), key=lambda (k,v): k):
-            print trial_name, errors
+            print(trial_name, errors)
             style = style_by_name.get(trial_name, {})
             pl.plot(Ks, errors, label=trial_name, **style)
         pl.locator_params(nbins=4)
